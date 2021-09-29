@@ -1,0 +1,22 @@
+2021-09-28 21:36:23,494 - spacetraders - INFO - Initialised Client for eb085f34-e8f1-4a5a-93ab-f9c337749dce
+2021-09-28 21:36:26,498 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/my/account using GET, {'Authorization': 'Bearer eb085f34-e8f1-4a5a-93ab-f9c337749dce'}
+2021-09-28 21:36:26,810 - spacetraders - DEBUG - Recieved response: {'user': {'username': 'tessssssssssssst', 'shipCount': 0, 'structureCount': 0, 'joinedAt': '2021-09-28T16:55:25.658Z', 'credits': 0}}
+2021-09-28 21:36:26,825 - spacetraders - DEBUG - Finished with request, returning response
+2021-09-28 21:36:26,827 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/my/account using GET, {'Authorization': 'Bearer eb085f34-e8f1-4a5a-93ab-f9c337749dce'}
+2021-09-28 21:36:27,012 - spacetraders - DEBUG - Recieved response: {'user': {'username': 'tessssssssssssst', 'shipCount': 0, 'structureCount': 0, 'joinedAt': '2021-09-28T16:55:25.658Z', 'credits': 0}}
+2021-09-28 21:36:27,020 - spacetraders - DEBUG - Finished with request, returning response
+2021-09-28 21:36:27,021 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/my/account using GET, {'Authorization': 'Bearer eb085f34-e8f1-4a5a-93ab-f9c337749dce'}
+2021-09-28 21:36:27,186 - spacetraders - DEBUG - Recieved response: {'user': {'username': 'tessssssssssssst', 'shipCount': 0, 'structureCount': 0, 'joinedAt': '2021-09-28T16:55:25.658Z', 'credits': 0}}
+2021-09-28 21:36:27,188 - spacetraders - DEBUG - Finished with request, returning response
+2021-09-28 21:36:27,188 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/my/account using GET, {'Authorization': 'Bearer eb085f34-e8f1-4a5a-93ab-f9c337749dce'}
+2021-09-28 21:36:27,378 - spacetraders - DEBUG - Recieved response: {'user': {'username': 'tessssssssssssst', 'shipCount': 0, 'structureCount': 0, 'joinedAt': '2021-09-28T16:55:25.658Z', 'credits': 0}}
+2021-09-28 21:36:27,381 - spacetraders - DEBUG - Finished with request, returning response
+2021-09-28 21:36:27,381 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/my/account using GET, {'Authorization': 'Bearer eb085f34-e8f1-4a5a-93ab-f9c337749dce'}
+2021-09-28 21:36:27,550 - spacetraders - DEBUG - Recieved response: {'user': {'username': 'tessssssssssssst', 'shipCount': 0, 'structureCount': 0, 'joinedAt': '2021-09-28T16:55:25.658Z', 'credits': 0}}
+2021-09-28 21:36:27,553 - spacetraders - DEBUG - Finished with request, returning response
+2021-09-28 21:36:27,553 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/game/status using GET, None
+2021-09-28 21:36:27,698 - spacetraders - DEBUG - Recieved response: {'status': 'spacetraders is currently online and available to play'}
+2021-09-28 21:36:27,701 - spacetraders - DEBUG - Finished with request, returning response
+2021-09-28 21:36:27,701 - spacetraders - DEBUG - Making request to https://api.spacetraders.io/game/leaderboard/net-worth using GET, {'Authorization': 'Bearer eb085f34-e8f1-4a5a-93ab-f9c337749dce'}
+2021-09-28 21:36:34,461 - spacetraders - DEBUG - Recieved response: {'netWorth': [{'username': 'Greeniee', 'netWorth': 10382698127, 'rank': 1}, {'username': 'space_panda', 'netWorth': 1627904013, 'rank': 2}, {'username': 'umuero', 'netWorth': 667401067, 'rank': 3}, {'username': 'bloveless2', 'netWorth': 430807647, 'rank': 4}, {'username': 'Redcrafter', 'netWorth': 206927121, 'rank': 5}, {'username': 'lilou', 'netWorth': 46231906, 'rank': 6}, {'username': 'flush', 'netWorth': 26843516, 'rank': 7}, {'username': 'ThatGuy', 'netWorth': 16458337, 'rank': 8}, {'username': 'bunnyskull', 'netWorth': 4592292, 'rank': 9}, {'username': 'Sai-Prabhav', 'netWorth': 2656563, 'rank': 10}]}
+2021-09-28 21:36:34,464 - spacetraders - DEBUG - Finished with request, returning response
