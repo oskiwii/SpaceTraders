@@ -2,8 +2,8 @@ Lib/
 .vscode/
 .idea/
 Scripts/
-dump.json
-*.log
-test.py
-*.cfg
 Include/
+pyenv.cfg
+spacetraders.log
+dump.json
+test.py
