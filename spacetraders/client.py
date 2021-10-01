@@ -8,20 +8,14 @@ with open('spacetraders.log', 'w') as f:
 logger = logging.getLogger('spacetraders')
 logger.setLevel(logging.DEBUG)
 
-# create file handler which logs even debug messages
 fh = logging.FileHandler('spacetraders.log')
 fh.setLevel(logging.DEBUG)
 
-sh = logging.StreamHandler()
-sh.setLevel(logging.DEBUG)
-
-# create formatter and add it to the handlers
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
-sh.setFormatter(formatter)
-# add the handlers to logger
+
 logger.addHandler(fh)
-logger.addHandler(sh)
+
 
 # ----------------
 
@@ -39,14 +33,20 @@ class User:
 
 
 class Client(User):
-    def __init__(self, token: str):
+    def __init__(self, token: str, verbose: bool = False):
         """
         The client to communicate with the game. Represents you as the Player
 
         :param token: - type 'str' - the API token to authenticate with
+        :param verbose: - type 'bool' - whether or not to print the output to stdout
         """
-
         self.log = logging.getLogger('spacetraders')
+        if verbose:
+            sh = logging.StreamHandler()
+            sh.setLevel(logging.DEBUG)
+            sh.setFormatter(formatter)
+            self.log.addHandler(sh)
+        
         self.http = HTTPClient()
         self.headers = {'Authorization': f'Bearer {token}'}
         self.token = token
