@@ -11,7 +11,7 @@ logger.setLevel(logging.DEBUG)
 fh = logging.FileHandler('spacetraders.log')
 fh.setLevel(logging.DEBUG)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - %(name)s') 
 fh.setFormatter(formatter)
 
 logger.addHandler(fh)
@@ -52,12 +52,12 @@ class Client(User):
         self.token = token
         self.log.info(f'Initialised Client for {token}')
 
-    async def profile(self) -> CurrentProfile:
+    async def getProfile(self) -> CurrentProfile:
         resp = await self.http.communicate('GET', 'https://api.spacetraders.io/my/account', headers = self.headers)
         profile = await CurrentProfile().construct(resp)
         return profile
 
-    async def flightPlan(self, id: str) -> FlightPlan:
+    async def getFlightPlan(self, id: str) -> FlightPlan:
         """
         Gets the information of a Flight Plan using the ID
 
