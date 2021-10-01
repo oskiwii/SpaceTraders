@@ -20,7 +20,7 @@ class HTTPClient:
         self.log.debug(f'Making request to {url} using {requesttype}, {headers}')
 
         # Get type function and run checks
-        if requesttype not in ('GET', 'POST'):
+        if requesttype not in ('GET', 'POST', 'PUT'):
             raise HTTPError(f'Request must be GET or POST, not {requesttype}')
 
         if url is None:
