@@ -2,3 +2,8 @@ Lib/
 .vscode/
 .idea/
 Scripts/
+dump.json
+*.log
+test.py
+*.cfg
+Include/
