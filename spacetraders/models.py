@@ -1,5 +1,7 @@
 from . import HTTP
 import json
+import logging
+log = logging.getLogger('spacetraders')
 CLIENT = HTTP.HTTPClient()
 
 # Models
@@ -22,6 +24,7 @@ class CurrentProfile():
         for k, v in user.items():
             setattr(self, k, v)
 
+        log.debug('Made a currentProfile object')
         return self
 
 class FlightPlan:
@@ -44,6 +47,7 @@ class FlightPlan:
         for k, v in user.items():
             setattr(self, k, v)
 
+        log.debug('Made a flightPlan object')
         return self
 
 class leaderboardEntry:
@@ -57,4 +61,20 @@ class leaderboardEntry:
         for k, v in resp.items():
             setattr(self, k, v)
 
+        log.debug('Made a leaderboardEntry object')
         return self
+
+class loan:
+    def __init__(self):
+        self.due = ''
+        self.id = ''
+        self.repaymentAmount = 0
+        self.status = ''
+        self.type = ''
+
+    def construct(self, resp):
+
+        for k, v in resp.items():
+            setattr(self, k, v)
+
+        log.debug('Made a loan object')
