@@ -16,7 +16,7 @@ class CurrentProfile():
         self.structureCount = 0
         self.username = ''
 
-    async def profile(self, resp: dict):
+    async def construct(self, resp: dict):
         user = resp['user']
         
         for k, v in user.items():
@@ -38,7 +38,7 @@ class FlightPlan:
         self.terminatedAt = None
         self.timeRemainingInSeconds = 0
 
-    async def plan(self, resp):
+    async def construct(self, resp):
         user = resp['flightPlan']
         
         for k, v in user.items():
@@ -52,7 +52,7 @@ class leaderboardEntry:
         self.netWorth = 0
         self.rank = 0
 
-    def make(self, resp):
+    def construct(self, resp):
         
         for k, v in resp.items():
             setattr(self, k, v)

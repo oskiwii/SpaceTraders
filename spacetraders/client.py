@@ -12,12 +12,16 @@ logger.setLevel(logging.DEBUG)
 fh = logging.FileHandler('spacetraders.log')
 fh.setLevel(logging.DEBUG)
 
+sh = logging.StreamHandler()
+sh.setLevel(logging.DEBUG)
+
 # create formatter and add it to the handlers
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)
-
+sh.setFormatter(formatter)
 # add the handlers to logger
 logger.addHandler(fh)
+logger.addHandler(sh)
 
 # ----------------
 
@@ -50,7 +54,7 @@ class Client(User):
 
     async def profile(self) -> CurrentProfile:
         resp = await self.http.communicate('GET', 'https://api.spacetraders.io/my/account', headers = self.headers)
-        profile = await CurrentProfile().profile(resp)
+        profile = await CurrentProfile().construct(resp)
         return profile
 
     async def flightPlan(self, id: str) -> FlightPlan:
@@ -60,12 +64,12 @@ class Client(User):
         Returns FlightPlan
         """
         resp = await self.http.communicate('GET', f'https://api.spacetraders.io/my/flight-plans/{id}', self.headers)
-        plan = await FlightPlan().plan(resp)
+        plan = await FlightPlan().construct(resp)
         return plan
 
     async def makeFlightPlan(self, shipId, destination) -> FlightPlan:
         resp =  await self.http.communicate('POST', f'https://api.spacetraders.io/my/flight-plans', headers=self.headers, params={'shipId': shipId, 'destination': destination})
-        plan = await FlightPlan().plan(resp)
+        plan = await FlightPlan().construct(resp)
         return plan
 
     async def serverStatus(self):
@@ -77,7 +81,7 @@ class Client(User):
 
         entries = []
         for entry in resp["netWorth"]:
-            entries.append(leaderboardEntry().make(entry))
+            entries.append(leaderboardEntry().construct(entry))
 
         return entries
 
