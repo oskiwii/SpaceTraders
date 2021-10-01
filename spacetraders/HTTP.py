@@ -1,11 +1,9 @@
-
 from spacetraders.errors import HTTPError
 import aiohttp
 import asyncio
 import logging
 import json
 
-# Disable aiohttp's warnings
 logging.getLogger('asyncio').setLevel(logging.CRITICAL)  # I know it isnt good, but still
 
 
@@ -29,22 +27,27 @@ class HTTPClient:
             raise HTTPError('URL is None')
 
         # Get the request function for the type we want
-        # Better implementation than if's and else's
+        # Better (but shitty) implementation than if's and else's
         send = getattr(self._client, requesttype.lower())
 
         response = await send(url, headers=headers, params=params)
 
         respjson = await response.json()
-        self.log.debug(f'Recieved response: {respjson}')
+        self.log.debug(f'Recieved response for request {requesttype} {url}: {respjson}')
 
         
 
         with open('dump.json', 'w') as f:
             json.dump(respjson, f, indent=4)
 
-        # if 'error' in respjson:
-        #    error = f'Error: {respjson["error"]["message"]}: {respjson["error"]["code"]}'
-        #    raise HTTPError(error)
+        if 'error' in respjson:
+
+            # THIS WILL BE REWORKED, IT SHALL BE BETTER!
+
+            error = f'Error: {respjson["error"]["message"]}: {respjson["error"]["code"]}'
+            self.log.critical(error)
+            raise HTTPError(error)
+
         self.log.debug('Finished with request, returning response')
         return respjson
 
@@ -52,4 +55,5 @@ class HTTPClient:
         """
         Function to close the session
         """
+        self.log.warn('Closing session!')
         await self._client.close()
