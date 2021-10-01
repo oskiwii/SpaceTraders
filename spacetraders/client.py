@@ -21,7 +21,7 @@ logger.addHandler(fh)
 
 
 from spacetraders.HTTP import HTTPClient
-from spacetraders.models import CurrentProfile, FlightPlan, leaderboardEntry
+from spacetraders.models import CurrentProfile, FlightPlan, leaderboardEntry, loan
 from spacetraders.errors import ClientError
 
 import asyncio
@@ -84,6 +84,15 @@ class Client(User):
             entries.append(leaderboardEntry().construct(entry))
 
         return entries
+
+    async def getLoans(self):
+        resp = await self.http.communicate('GET', 'https://api.spacetraders.io/my/loans', headers=self.headers)
+        
+        loans = []
+        for data in resp['loans']:
+            loans.append(loan().construct(data))
+
+        return loans
 
     async def new_profile(self, name: str = None) -> CurrentProfile:
         """
