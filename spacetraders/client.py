@@ -11,7 +11,7 @@ logger.setLevel(logging.DEBUG)
 fh = logging.FileHandler('spacetraders.log')
 fh.setLevel(logging.DEBUG)
 
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - %(name)s') 
+formatter = logging.Formatter('%(name)s  %(levelname)s - %(message)s') 
 fh.setFormatter(formatter)
 
 logger.addHandler(fh)

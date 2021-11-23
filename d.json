@@ -1,0 +1,16 @@
+{
+    "x-powered-by": "Express",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "Retry-After, X-RateLimit-Type, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset",
+    "Retry-After": "0.241",
+    "x-ratelimit-type": "Account",
+    "x-ratelimit-limit": "2",
+    "x-ratelimit-remaining": "0",
+    "x-ratelimit-reset": "Tue Nov 23 2021 17:05:05 GMT+0000 (Coordinated Universal Time)",
+    "Content-Type": "application/json; charset=utf-8",
+    "Etag": "W/\"7b-Rw7DcpfZMHj3+TsPDvWHPRcQ/iI\"",
+    "X-Cloud-Trace-Context": "37404088fa3b5e4b32a40de1121149c4",
+    "Date": "Tue, 23 Nov 2021 17:05:04 GMT",
+    "Server": "Google Frontend",
+    "Content-Length": "123"
+}
