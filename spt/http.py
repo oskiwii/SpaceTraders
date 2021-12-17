@@ -2,6 +2,7 @@ from aiohttp import ClientSession, ClientResponse
 from .errors import ReachedMaximumRetries, HTTPError
 from asyncio import AbstractEventLoop
 from .route import Route
+from threading import Lock
 
 
 import asyncio
@@ -15,7 +16,7 @@ class HTTPClient:
         self._log = logging.getLogger('spacetraders-http')
         self.__token = token
         self.session: ClientSession = ClientSession(headers = {'Authorization': f'Bearer {token}'})
-        self.__lock = asyncio.Lock()
+        self.__lock = kwargs.get('lock', Lock())
         self.loop: AbstractEventLoop = loop
 
         self.kwargs = kwargs
@@ -42,9 +43,9 @@ class HTTPClient:
         _log = self._log
         timeout = route.timeout if not self.kwargs.get('timeout', False) else self.kwargs.get('timeout', False)
         
-        _log.debug(f'{route.method.upper()} {route.url} with params {route.json}')
+        _log.info(f'{route.method.upper()} {route.url} with params {route.json}')
 
-        async with self.__lock:
+        with self.__lock:
             while retries != self.max_retries:
                 try:
                     async with self.session.request(
@@ -65,7 +66,7 @@ class HTTPClient:
                         wait_for = float(headers.get('Retry-After'))
 
                         if remain == 0 and wait_for != 0:
-                            _log.warn(f'Client has hit ratelimit, locking and waiting for {wait_for} seconds')
+                            _log.warn(f'Client has hit ratelimit, waiting for {wait_for} seconds')
                             await asyncio.sleep(wait_for)
 
                         return json
@@ -198,4 +199,131 @@ class HTTPClient:
 
         return res
 
-    async def transfer_cargo(self, from: str, to: str, good: str, quantity: str)
+    async def transfer_cargo(self, from_id: str, to: str, good: str, quantity: str):
+        res = await self.request(
+            Route(
+                'post', f'https://api.spacetraders.io/my/ships/{from_id}/transfer',
+                params = {'toShipId': to, 'good': good, 'quantity': quantity}
+            )
+        )
+
+        return res
+
+    async def create_new_structure(self, location: str, type: str):
+        res = await self.request(
+            Route(
+                'post', f'https://api.spacetraders.io/my/structures',
+                params = {'location': location, 'type': type}
+            )
+        )
+
+        return res
+
+    async def deposit_to_owned(self, structure_id: str, ship: str, good: str, quantity: int):
+        res = await self.request(
+            Route(
+                'post', f'https://api.spacetraders.io/my/structures/{structure_id}/deposit',
+                params = {'structureId': structure_id, 'shipId': ship, 'good': good, 'quantity': quantity}
+            )
+        )
+
+        return res
+
+    async def deposit_goods(self, structure_id: str, ship: str, good: str, quantity: int):
+        res = await self.request(
+            Route(
+                'post', f'https://api.spacetraders.io/structures/{structure_id}/deposit',
+                params = {'structureId': structure_id, 'shipId': ship, 'good': good, 'quantity': quantity}
+            )
+        )
+
+        return res
+
+    async def get_structure_info(self, structure):
+        res = await self.request(
+            Route(
+                'get', f'https://api.spacetraders.io/structures/{structure}', params = {'structureId': structure}
+            )
+        )
+
+        return res
+
+    async def transfer_to_structure(self, structure: str, ship: str, good: str, quantity: int):
+        res = await self.request(
+            Route(
+                'post', f'https://api.spacetraders.io/my/structures/{structure}/transfer',
+                params = {'structureId': structure, 'shipId': ship, 'good': good, 'quantity': quantity}
+            )
+        )
+
+        return res
+
+    async def see_my_structure(self, structure: str):
+        res = await self.request(
+            Route('get', f'https://api.spacetraders.io/my/structures/{structure}', params = {'structureId': structure})
+        )
+
+        return res
+
+    async def see_all_my_structures(self):
+        res = await self.request(Route('get', 'https://api.spacetraders.io/my/structures'))
+
+        return res
+
+    async def get_all_available_ships(self, system: str):
+        res = await self.request(Route('get', f'https://api.spacetraders.io/systems/{system}/ship-listings', params = {'systemSymbol': system}))
+
+        return res
+
+    async def get_all_flight_plans(self, system: str):
+        res = await self.request(Route('get', f'https://api.spacetraders.io/systems/{system}/flight-plans', params = {'systemSymbol': system}))
+
+        return res
+
+    async def get_docked_ships(self, system: str):
+        res = await self.request(Route('get', f'https://api.spacetraders.io/systems/{system}/ships', params = {'systemSymbol': system}))
+
+        return res
+
+    async def get_locations(self, system: str):
+        res = await self.request(Route('get', f'https://api.spacetraders.io/systems/{system}/locations', params = {'systemSymbol': system}))
+
+        return res
+    
+    async def get_system(self, system: str):
+        res = await self.request(Route('get', f'https://api.spacetraders.io/systems/{system}', params = {'systemSymbol': system}))
+
+        return res
+
+    async def get_good_types(self):
+        res = await self.request(Route('get', 'https://api.spacetraders.io/types/goods'))
+
+        return res
+
+    async def get_loan_types(self):
+        res = await self.request(Route('get', 'https://api.spacetraders.io/types/loans'))
+
+        return res
+
+    async def get_structure_types(self):
+        res = await self.request(Route('get', 'https://api.spacetraders.io/types/structures'))
+
+        return res
+
+    async def get_ship_types(self, ship_class: str = None):
+        res = await self.request(Route('get', 'https://api.spacetraders.io/types/ships', params = None if ship_class is None else {'class': ship_class}))
+
+        return res
+
+    async def claim_username(self, username: str):
+        res = await self.request(
+            Route(
+                'post', f'https://api.spacetraders.io/users/{username}/claim',
+                params = {'username': username}
+            )
+        )
+
+    async def attempt_warp(self, ship: str):
+        res = await self.request(Route('post', 'https://api.spacetraders.io/my/warp-jumps', params = {'shipId': ship}))
+
+        return res
