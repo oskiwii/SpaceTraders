@@ -53,7 +53,9 @@ class HTTPClient:
             else self.__kwargs.get("timeout", False)
         )
 
-        _log.info(f"{route.method.upper()} {route.url} with params {route.params}")
+
+        _log.info(route.__str__())
+        _log.info(route.kwargs)
 
         with self.__lock:
             while retries != self._max_retries:

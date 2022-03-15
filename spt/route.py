@@ -24,7 +24,7 @@ class Route:
         self.timeout = timeout
 
     def __str__(self):
-        return self.url
+        return f"{self.method.capitalize()} '{self.url}'\n\nParameters - {self.params}\nHeaders - {self.headers}\n"
 
     @property
     def kwargs(self):
