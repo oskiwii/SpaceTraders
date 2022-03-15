@@ -1,13 +1,27 @@
+# Old module
+spacetraders/
+
+# Virtualenv
 Lib/
-.vscode/
-.idea/
 Scripts/
-Include/
 pyenv.cfg
 
+# VSCode / Pycharm
+.vscode/
+.idea/
+
+# Python
 __pycache__/
+
+# Documentation
+# Will be written at a later date
 docs/
 
+# Logs, tests, and various things
 spacetraders.log
 dump.json
 test.py
+
+
+# Not sure what this is?
+Include/
