@@ -1,6 +1,11 @@
 # Old module
 spacetraders/
 
+# SUPER SECRET STUFF
+spt/ext/
+server_test.py
+server.py
+
 # Virtualenv
 Lib/
 Scripts/
